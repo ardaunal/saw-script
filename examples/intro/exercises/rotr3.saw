@@ -1,0 +1,18 @@
+include "../helpers.saw";
+import "Rotr3.cry";
+
+rotr3_mod <- llvm_load_module "rotr3.bc";
+
+let rotr3_spec = do {
+    (x, xp) <- pointer_to_fresh int32_t "x";
+    (y, yp) <- pointer_to_fresh int32_t "y";
+    (z, zp) <- pointer_to_fresh int32_t "z";
+
+    execute [xp, yp, zp];
+    let result_spec = {{ rotr3 (x, y, z) }};
+    points_to xp (from_cryptol {{ result_spec.0 }});
+    points_to yp (from_cryptol {{ result_spec.1 }});
+    points_to zp (from_cryptol {{ result_spec.2 }});
+};
+
+llvm_verify rotr3_mod "rotr3_fixed" [] rotr3_spec;

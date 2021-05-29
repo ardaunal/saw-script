@@ -1,7 +1,2 @@
-
-# Build commands for bitcode
-.SUFFIXES: .c .bc
-
-%.bc : %.c
-	clang-11 -g -O1 -c -emit-llvm $< -o $@
-# End build commands for bitcode
+rotr3.bc: rotr3.c
+	clang-11 -O1 -c -emit-llvm rotr3.c -o rotr3.bc
