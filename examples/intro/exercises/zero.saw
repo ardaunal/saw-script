@@ -1,0 +1,10 @@
+include "../helpers.saw";
+zeromod <- llvm_load_module "zero.bc";
+
+let zero_is_ok = do {
+     x <- symbolic_variable uint32_t "x";
+     execute [x];
+     returns ( TRUE );
+};
+
+llvm_verify zeromod "zero_spec" [] zero_is_ok;
