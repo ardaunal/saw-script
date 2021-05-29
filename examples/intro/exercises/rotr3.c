@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdint.h>
 
 void swap(uint32_t *x, uint32_t *y) {
@@ -19,4 +20,10 @@ void rotr3_fixed(uint32_t *x, uint32_t *y, uint32_t *z) {
     *x = *z;
     *y = tmp_x;
     *z = tmp_y;
+}
+
+bool rotr3_spec(uint32_t x, uint32_t y, uint32_t z) {
+    uint32_t a = x, b = y, c = z;
+    rotr3_fixed(&a, &b, &c);
+    return a == z && b == x && c == y;
 }
